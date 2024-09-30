@@ -11,6 +11,6 @@ dataset_en = load_dataset('multi_eurlex', 'en', split='test')
 print(dataset_en)
 
 for item in dataset_en:
-    print(item)
+    print(item['labels'])
     break
 
