@@ -12,6 +12,13 @@ class Dataset:
         """
         raise NotImplementedError("Child class must implement this method")
 
+    def get_true_labels(self):
+        """
+        Abstract method to get the true labels for the dataset.
+        This should be implemented by child classes.
+        """
+        raise NotImplementedError("Child class must implement this method")
+
     @staticmethod
     def get_dataset(name):
         """
@@ -44,7 +51,6 @@ class Multi_Eurlex(Dataset):
         :return: the data corresponding to the language parameter
         """
         dataset = load_dataset('multi_eurlex', language, split='test')
-        data = []
         if language == 'all_languages':
             data = self.extract_text_all_languages(dataset)
         else:
@@ -70,3 +76,10 @@ class Multi_Eurlex(Dataset):
         for item in dataset:
             data.append({"text": item['text'], "labels": item['labels']})
         return data
+
+    def get_true_labels(self, data):
+        """
+        :return: a list of true labels for the dataset
+        """
+        true_labels = [entry['labels'] for entry in data]
+        return true_labels

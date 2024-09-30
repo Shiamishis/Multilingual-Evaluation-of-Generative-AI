@@ -70,7 +70,9 @@ class Bart(Model):
         :param text: the text that needs to be classified
         :return: a list of all the labels corresponding to the given text
         """
-        prompt = text + "<|endoftext|>" + "Question: Which of the following labels apply?" + self.label_options + "Answer: "
+        print(type(text))
+        prompt = text + "<|endoftext|>" + ("Question: Which of the following labels apply?{', '.join(label_options)} "
+                                           "Answer:")
         generated_text = self.generate_text(prompt)
         prediction = self.extract_labels_from_generated_text(generated_text, self.label_options)
         predicted_labels_indexed = self.map_labels_to_indices(prediction, self.label_options)
